@@ -1,9 +1,9 @@
-from src.setings import PRODUCTS_PATH
 from src.moduls import get_category, get_product
+from src.setings import PRODUCTS_PATH
 from src.utils import get_json_file
 
 
-def main() ->None:
+def main() -> None:
     products_json = get_json_file(PRODUCTS_PATH)
     categories = get_category(products_json)
     products = get_product(products_json)
