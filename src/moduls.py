@@ -1,11 +1,5 @@
 class Category:
-    name: str
-    description: str
-    commodities: list
-    number_categories: int
-    number_unique_products: int
-
-    def __init__(self, name: str, description: str, commodities: list, number_categories: int):
+    def __init__(self, name, description, commodities, number_categories):
         self.name = name
         self.description = description
         self.commodities = commodities
@@ -14,24 +8,14 @@ class Category:
 
 
 class Product:
-    name: str
-    description: str
-    price: float
-    quantity_stock: int
-
-    def __init__(self, name: str, description: str, price: float, quantity_stock: int):
+    def __init__(self, name, description, price, quantity_stock):
         self.name = name
         self.description = description
         self.price = price
         self.quantity_stock = quantity_stock
 
 
-def get_category(products: list[dict]) -> list[Category]:
-    """
-    Функция инициализирует класс Category
-    :param products: Список продукций
-    :return: Список класса Category
-    """
+def get_category(products: list):
     initialization_categories = []
     for product_category in products:
         if product_category:
@@ -45,12 +29,7 @@ def get_category(products: list[dict]) -> list[Category]:
     return initialization_categories
 
 
-def get_product(products: list[dict]) -> list[Product]:
-    """
-    Функция инициализирует класс Product
-    :param products: Список продукций
-    :return: Список класса Product
-    """
+def get_product(products: list):
     initialization_products = []
     for product_category in products:
         if product_category:
@@ -66,10 +45,8 @@ def get_product(products: list[dict]) -> list[Product]:
 
 
 def get_commodities(product: dict) -> list:
-    """
-    Получаем список товаров
-    """
     list_products = []
     for name in product['products']:
         list_products.append(name['name'])
     return list_products
+
