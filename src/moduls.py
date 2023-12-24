@@ -1,9 +1,4 @@
 class Category:
-    name: str
-    description: str
-    commodities: list
-    number_categories: int
-    number_unique_products: int
 
     def __init__(self, name: str, description: str, commodities: list, number_categories: int):
         self.name = name
@@ -14,10 +9,6 @@ class Category:
 
 
 class Product:
-    name: str
-    description: str
-    price: float
-    quantity_stock: int
 
     def __init__(self, name: str, description: str, price: float, quantity_stock: int):
         self.name = name
