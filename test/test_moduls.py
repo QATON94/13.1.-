@@ -1,46 +1,29 @@
 import pytest
 
-from src.moduls import get_category, get_product
+from src.moduls import Category, Product
+from src.setings import TEST_PATH
 
 
 @pytest.fixture()
-def products():
-    return [
-        {
-            "name": "Смартфоны",
-            "description": "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для "
-                           "удобства жизни",
-            "products": [
-                {
-                    "name": "Samsung Galaxy C23 Ultra",
-                    "description": "256GB, Серый цвет, 200MP камера",
-                    "price": 180000.0,
-                    "quantity": 5
-                },
-                {
-                    "name": "Iphone 15",
-                    "description": "512GB, Gray space",
-                    "price": 210000.0,
-                    "quantity": 8
-                }
-            ]
-        }
-    ]
+def path_test_json():
+    return TEST_PATH
 
 
-def test_get_category(products):
-    category = get_category(products)
-    assert category[0].name == "Смартфоны"
-    assert category[0].description == ("Смартфоны, как средство не только коммуникации, но и получение дополнительных "
-                                       "функций для удобства жизни")
-    assert category[0].commodities == ["Samsung Galaxy C23 Ultra", "Iphone 15"]
+def test_product(path_test_json):
+    category = Category.init_from_file_for_category(path_test_json)
+    error = f"'Category' object has no attribute '__product'"
+    assert category[0].name == "Телевизоры"
+    assert category[0].description == ('Современный телевизор, который позволяет наслаждаться просмотром, станет '
+                                       'вашим другом и помощником')
+    assert category[0].displey_list_product == ['55" QLED 4K, 123000.0 руб. Остаток: 7 шт.']
     assert category[0].number_categories == 1
-    assert category[0].number_unique_products == 2
+    assert category[0].total_number_of_unique_products == 1
 
 
-def test_get_product(products):
-    product = get_product(products)
-    assert product[0].name == "Samsung Galaxy C23 Ultra"
-    assert product[0].description == "256GB, Серый цвет, 200MP камера"
-    assert product[1].price == 210000.0
-    assert product[0].quantity_stock == 5
+
+def test_get_product(path_test_json):
+    product = Product.init_from_file_for_product(path_test_json)
+    assert product[0].name == "55\" QLED 4K"
+    assert product[0].description == "Фоновая подсветка"
+    assert product[0].price == 123000.0
+    assert product[0].quantity == 7

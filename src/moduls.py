@@ -18,7 +18,7 @@ class FromFile:
 class Category(FromFile):
     number_categories = 0
 
-    def __init__(self, name: str, description: str, products):
+    def __init__(self, name: str, description: str, products: list):
         self.name = name
         self.description = description
         self.__product = products
@@ -26,7 +26,10 @@ class Category(FromFile):
         self.total_number_of_unique_products = len(self.__product)
 
     @property
-    def displey_list_product(self):
+    def displey_list_product(self) -> list:
+        """
+        Геттер который выводит список товаров
+        """
         products = self.__product
         displey_list = []
         for product in products:
@@ -34,7 +37,12 @@ class Category(FromFile):
         return displey_list
 
     @classmethod
-    def init_from_file(cls, filename):
+    def init_from_file_for_category(cls, filename: Any) -> list:
+        """
+        Метод иницилизации ксласса Category
+        :param filename: путь к json файлу
+        :return: Список с категориями продуктов
+        """
         data = cls.get_json_file(filename)
         initialization_categories = []
         for item in data:
@@ -74,13 +82,15 @@ class Product(FromFile):
         """
         if self.price > new_price:
             input_user = input("Eсли хотите изменить цену товара введите Y ")
-            if input_user.islower() == 'y':
+
+            if input_user.lower() == 'y':
+                print(input_user)
                 self.price = new_price
         else:
             self.price = new_price
 
     @classmethod
-    def get_products(cls, filename: Any) -> list:
+    def init_from_file_for_product(cls, filename: Any) -> list:
         """
         Функция инициализирует класс Product
         :param filename: Путь к файлу
@@ -126,7 +136,7 @@ class Product(FromFile):
         #     "quantity": input('quantity = ')
         # }
         new_product = {
-            "name": "Xiaomi Redmi Note 11",
+            "name": "Xiaomi Redmi Note 10",
             "description": "256GB, Серый цвет, 200MP камера",
             "price": 20000.0,
             "quantity": 5
