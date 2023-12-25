@@ -116,7 +116,7 @@ class Product(FromFile):
         for item in products:
             if item.name == new_product['name']:
                 check = True
-                products[i].change_price = new_product['price']
+                products[i].change_price = float(new_product['price'])
                 products[i].quantity += new_product['quantity']
             i += 1
         if not check:
@@ -132,7 +132,7 @@ class Product(FromFile):
         # new_product = {
         #     "name": input('name = '),
         #     "description": input('description = '),
-        #     "price": float(input('price = ')),
+        #     "price": (input('price = ')),
         #     "quantity": input('quantity = ')
         # }
         new_product = {
