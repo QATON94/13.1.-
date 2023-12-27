@@ -6,7 +6,7 @@ class FromFile:
     @staticmethod
     def get_json_file(path: Any) -> list[dict]:
         """
-        Получем данные с json файла
+        Получаем данные с json файла
         :param path: Путь к файлу
         :return: Список с данными json файла
         """
@@ -26,20 +26,20 @@ class Category(FromFile):
         self.total_number_of_unique_products = len(self.__product)
 
     @property
-    def displey_list_product(self) -> list:
+    def display_list_product(self) -> list:
         """
-        Геттер который выводит список товаров
+        Геттер, который выводит список товаров
         """
         products = self.__product
-        displey_list = []
+        display_list = []
         for product in products:
-            displey_list.append(f'{product["name"]}, {product["price"]} руб. Остаток: {product["quantity"]} шт.')
-        return displey_list
+            display_list.append(f'{product["name"]}, {product["price"]} руб. Остаток: {product["quantity"]} шт.')
+        return display_list
 
     @classmethod
     def init_from_file_for_category(cls, filename: Any) -> list:
         """
-        Метод иницилизации ксласса Category
+        Метод инициализации класса Category
         :param filename: путь к json файлу
         :return: Список с категориями продуктов
         """
@@ -77,7 +77,7 @@ class Product(FromFile):
     @change_price.setter
     def change_price(self, new_price: float):
         """
-        Сеттер записывет новую цену, если цена ниже текущей то спрашивает разрешение на перезапись
+        Сеттер записывает новую цену, если цена ниже текущей то спрашивает разрешение на перезапись
         :param new_price: новая цена
         """
         if self.price > new_price:
@@ -106,11 +106,11 @@ class Product(FromFile):
     @classmethod
     def add_new_product(cls, products: list) -> list:
         """
-        Метод добовляет новый продукт или обновляет старый
+        Метод добавляет новый продукт или обновляет старый
         :param products: Список продуктов
         :return: обновленный список продуктов
         """
-        new_product = Product.crate_new_product()
+        new_product = Product.create_new_product()
         check = False
         i = 0
         for item in products:
@@ -124,7 +124,7 @@ class Product(FromFile):
         return products
 
     @staticmethod
-    def crate_new_product() -> dict:
+    def create_new_product() -> dict:
         """
         Функция создает новый продукт
         :return: Словарь

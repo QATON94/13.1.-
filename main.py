@@ -9,7 +9,7 @@ def main() -> None:
     for category in categories:
         print(category.name)
         print(category.description)
-        print(category.displey_list_product)
+        print(category.display_list_product)
         print(category.number_categories)
         print(category.total_number_of_unique_products)
         print('____________')

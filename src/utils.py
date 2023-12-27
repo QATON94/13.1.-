@@ -4,7 +4,7 @@ from typing import Any
 
 def get_json_file(path: Any) -> Any:
     """
-    Получем данные с json файла
+    Получаем данные с json файла
     :param path: Путь к файлу
     :return: Список с данными json файла
     """
