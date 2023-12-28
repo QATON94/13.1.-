@@ -26,7 +26,16 @@ class Category(FromFile):
         self.total_number_of_unique_products = len(self.__product)
 
     @property
-    def display_list_product(self) -> list:
+    def products(self) -> list:
+        """
+        Получаем доступ к self.__product
+        :return:
+        """
+        products = self.__product
+        return products
+
+    @property
+    def display_list_product(self) -> str:
         """
         Геттер, который выводит список товаров
         """
@@ -34,7 +43,19 @@ class Category(FromFile):
         display_list = []
         for product in products:
             display_list.append(f'{product["name"]}, {product["price"]} руб. Остаток: {product["quantity"]} шт.')
-        return display_list
+        return '\n'.join(display_list)
+
+    @property
+    def display_quantity_products(self) -> str:
+        """
+        Геттер, который выводит общее количество продуктов в одной категории
+        :return: Название категории, количество продуктов: X шт.
+        """
+        products = self.__product
+        total_quantity = 0
+        for product in products:
+            total_quantity += product['quantity']
+        return f'{self.name}, количество продуктов: {total_quantity} шт.'
 
     @classmethod
     def init_from_file_for_category(cls, filename: Any) -> list:
@@ -141,5 +162,7 @@ class Product(FromFile):
             "price": 20000.0,
             "quantity": 5
         }
-
         return new_product
+
+    def __add__(self, other):
+        return self.price * self.quantity + other.price * other.quantity
