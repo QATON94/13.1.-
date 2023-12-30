@@ -9,10 +9,8 @@ def main() -> None:
     for category in categories:
         print(category.name)
         print(category.description)
-        print(category.display_list_product)
         print(category.number_categories)
         print(category.total_number_of_unique_products)
-        print(category.display_quantity_products)
         print('____________')
 
     for product in products:
@@ -20,10 +18,12 @@ def main() -> None:
         print(product.description)
         print(product.price)
         print(product.quantity)
+        print(product)
         print('____________')
 
     print(products[0] + products[1])
-
+    print(categories)
+    print(products)
 
 if __name__ == '__main__':
     main()

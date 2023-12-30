@@ -14,10 +14,9 @@ def test_product(path_test_json):
     assert category[0].name == "Телевизоры"
     assert category[0].description == ('Современный телевизор, который позволяет наслаждаться просмотром, станет '
                                        'вашим другом и помощником')
-    assert category[0].display_list_product == '55" QLED 4K, 123000.0 руб. Остаток: 7 шт.'
     assert category[0].number_categories == 1
     assert category[0].total_number_of_unique_products == 1
-    assert category[0].display_quantity_products == 'Телевизоры, количество продуктов: 7 шт.'
+    print(category)
 
 
 def test_get_product(path_test_json):
@@ -32,3 +31,4 @@ def test_get_product(path_test_json):
     assert product[1].price == 20000.0
     assert product[1].quantity == 5
     assert product[0] + product[1] == 961000.0
+    print(product)

@@ -31,29 +31,23 @@ class Category(FromFile):
         Получаем доступ к self.__product
         :return:
         """
-        products = self.__product
-        return products
+        return self.__product
 
-    @property
-    def display_list_product(self) -> str:
+    def __str__(self) -> str:
         """
-        Геттер, который выводит список товаров
-        """
-        products = self.__product
-        display_list = []
-        for product in products:
-            display_list.append(f'{product["name"]}, {product["price"]} руб. Остаток: {product["quantity"]} шт.')
-        return '\n'.join(display_list)
-
-    @property
-    def display_quantity_products(self) -> str:
-        """
-        Геттер, который выводит общее количество продуктов в одной категории
         :return: Название категории, количество продуктов: X шт.
         """
-        products = self.__product
         total_quantity = 0
-        for product in products:
+        for product in self.products:
+            total_quantity += product['quantity']
+        return f'{self.name}, количество продуктов: {total_quantity} шт.'
+
+    def __repr__(self) -> str:
+        """
+        :return: Название категории, количество продуктов: X шт.
+        """
+        total_quantity = 0
+        for product in self.products:
             total_quantity += product['quantity']
         return f'{self.name}, количество продуктов: {total_quantity} шт.'
 
@@ -87,6 +81,12 @@ class Product(FromFile):
         self.description = description
         self.price = price
         self.quantity = quantity
+
+    def __str__(self):
+        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
+
+    def __repr__(self):
+        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
 
     @property
     def change_price(self):
