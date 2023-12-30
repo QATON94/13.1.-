@@ -83,9 +83,15 @@ class Product(FromFile):
         self.quantity = quantity
 
     def __str__(self):
+        """
+        :return: Название продукта, X руб. Остаток: Y шт.
+        """
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
 
     def __repr__(self):
+        """
+        :return: Название продукта, X руб. Остаток: Y шт.
+        """
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
 
     @property
