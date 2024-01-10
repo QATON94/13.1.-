@@ -172,3 +172,29 @@ class Product(FromFile):
 
     def __add__(self, other):
         return self.price * self.quantity + other.price * other.quantity
+
+
+class Smartphone(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, performance, model: str,
+                 amount_built_in_memory: int, color: str):
+        super().__init__(name, description, price, quantity)
+        self.performance = performance
+        self.model = model
+        self.amount_built_in_memory = amount_built_in_memory
+        self.color = color
+
+    def __add__(self, other):
+        if isinstance(self, Smartphone):
+            super().__add__(self)
+        else:
+            raise type(object)
+
+class LawnGrass(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, producing_country: str,
+                 germination_period: int, color: str):
+        super().__init__(name, description, price, quantity)
+        self.producing_country = producing_country
+        self.germination_period = germination_period
+        self.color = color
