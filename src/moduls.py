@@ -82,6 +82,7 @@ class Category(FromFile):
 
 
 class Product(FromFile):
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """
         Инициализация класса
@@ -143,33 +144,11 @@ class Product(FromFile):
                 initialization_products.append(cls(**prod))
         return initialization_products
 
-    @classmethod
-    def add_new_product(cls, products=None) -> list | Any:
-        """
-        Метод добавляет новый продукт или обновляет старый
-        :param products: Список продуктов
-        :return: обновленный список продуктов
-        """
-        new_product = cls.create_new_product()
-        check = False
-        if products is None:
-            products = []
-        i = 0
-        for item in products:
-            if item.name == new_product['name']:
-                check = True
-                products[i].change_price = float(new_product['price'])
-                products[i].quantity += new_product['quantity']
-            i += 1
-        if not check:
-            products.append(cls(**new_product))
-        return products
-
     @staticmethod
-    def create_new_product() -> dict:
+    def add_new_product() -> dict:
         """
-        Функция создает новый продукт
-        :return: Словарь
+        Метод создает новый продукт
+        :return: обновленный список продуктов
         """
         new_product = {
             "name": input('name = '),
@@ -178,6 +157,30 @@ class Product(FromFile):
             "quantity": input('quantity = ')
         }
         return new_product
+
+    @staticmethod
+    def append_product(new_product: Any, products: Any) -> list:
+        """
+        Метод добавляет новый продукт или обновляет старый
+        :param new_product: новый продукт
+        :param: список продуктов
+        :return: обновленный список продуктов
+        """
+        check = False
+        if issubclass(new_product.__class__, Product):
+            i = 0
+            if type(products) is not list:
+                products = [products]
+            for product in products:
+                if new_product.name == product.name:
+                    products[i].description = new_product.description
+                    products[i].change_price = float(new_product.price)
+                    products[i].quantity += int(new_product.quantity)
+                    check = True
+                i += 1
+            if not check:
+                products.append(new_product)
+        return products
 
     def __add__(self, other):
 
@@ -207,33 +210,6 @@ class Smartphone(Product):
         self.amount_built_in_memory = amount_built_in_memory
         self.color = color
 
-    @staticmethod
-    def create_new_product() -> dict:
-        """
-        Функция создает новый продукт
-        :return: Словарь
-        """
-        new_product = {
-            "name": input('name = '),
-            "description": input('description = '),
-            "price": (input('price = ')),
-            "quantity": input('quantity = '),
-            "performance": input('performance = '),
-            "model": input('model = '),
-            "amount_built_in_memory": input('amount_built_in_memory = '),
-            "color": input('color = ')
-        }
-        return new_product
-
-    @classmethod
-    def add_new_product(cls, products=None) -> list:
-        """
-        Метод добавляет новый продукт или обновляет старый
-        :param products: Список продуктов
-        :return: обновленный список продуктов
-        """
-        return super().add_new_product()
-
 
 class LawnGrass(Product):
 
@@ -253,29 +229,3 @@ class LawnGrass(Product):
         self.producing_country = producing_country
         self.germination_period = germination_period
         self.color = color
-
-    @staticmethod
-    def create_new_product() -> dict:
-        """
-        Функция создает новый продукт
-        :return: Словарь
-        """
-        new_product = {
-            "name": input('name = '),
-            "description": input('description = '),
-            "price": (input('price = ')),
-            "quantity": input('quantity = '),
-            "producing_country": input('producing_country = '),
-            "germination_period": input('germination_period = '),
-            "color": input('color = ')
-        }
-        return new_product
-
-    @classmethod
-    def add_new_product(cls, products=None) -> list:
-        """
-        Метод добавляет новый продукт или обновляет старый
-        :param products:
-        :return:
-        """
-        return super().add_new_product()
