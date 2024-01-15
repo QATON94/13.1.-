@@ -19,6 +19,12 @@ class Category(FromFile):
     number_categories = 0
 
     def __init__(self, name: str, description: str, products: list):
+        """
+        Инициализация класса Category
+        :param name: Имя
+        :param description: Описание
+        :param products: Продукты
+        """
         self.name = name
         self.description = description
         self.__product = products
@@ -76,7 +82,15 @@ class Category(FromFile):
 
 
 class Product(FromFile):
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
+        """
+        Инициализация класса
+        :param name: Имя
+        :param description: Описание
+        :param price: Цена
+        :param quantity: Количество
+        """
         self.name = name
         self.description = description
         self.price = price
@@ -130,45 +144,88 @@ class Product(FromFile):
                 initialization_products.append(cls(**prod))
         return initialization_products
 
-    @classmethod
-    def add_new_product(cls, products: list) -> list:
+    @staticmethod
+    def add_new_product() -> dict:
         """
-        Метод добавляет новый продукт или обновляет старый
-        :param products: Список продуктов
+        Метод создает новый продукт
         :return: обновленный список продуктов
         """
-        new_product = Product.create_new_product()
-        check = False
-        i = 0
-        for item in products:
-            if item.name == new_product['name']:
-                check = True
-                products[i].change_price = float(new_product['price'])
-                products[i].quantity += new_product['quantity']
-            i += 1
-        if not check:
-            products.append(cls(**new_product))
-        return products
-
-    @staticmethod
-    def create_new_product() -> dict:
-        """
-        Функция создает новый продукт
-        :return: Словарь
-        """
-        # new_product = {
-        #     "name": input('name = '),
-        #     "description": input('description = '),
-        #     "price": (input('price = ')),
-        #     "quantity": input('quantity = ')
-        # }
         new_product = {
-            "name": "Xiaomi Redmi Note 10",
-            "description": "256GB, Серый цвет, 200MP камера",
-            "price": 20000.0,
-            "quantity": 5
+            "name": input('name = '),
+            "description": input('description = '),
+            "price": (input('price = ')),
+            "quantity": input('quantity = ')
         }
         return new_product
 
+    @staticmethod
+    def append_product(new_product: Any, products: Any) -> list:
+        """
+        Метод добавляет новый продукт или обновляет старый
+        :param new_product: новый продукт
+        :param: список продуктов
+        :return: обновленный список продуктов
+        """
+        check = False
+        if issubclass(new_product.__class__, Product):
+            i = 0
+            if type(products) is not list:
+                products = [products]
+            for product in products:
+                if new_product.name == product.name:
+                    products[i].description = new_product.description
+                    products[i].change_price = float(new_product.price)
+                    products[i].quantity += int(new_product.quantity)
+                    check = True
+                i += 1
+            if not check:
+                products.append(new_product)
+        return products
+
     def __add__(self, other):
-        return self.price * self.quantity + other.price * other.quantity
+
+        if isinstance(other, self.__class__):
+            return self.price * self.quantity + other.price * other.quantity
+        raise print('Неверное сложение в продуктах')
+
+
+class Smartphone(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, performance, model: str,
+                 amount_built_in_memory: str, color: str):
+        """
+        Функция инициализирует класс Smartphone
+        :param name: Имя
+        :param description: Описание
+        :param price: Цена
+        :param quantity: Количество
+        :param performance: производительность
+        :param model: модель
+        :param amount_built_in_memory: объем встроенной памяти
+        :param color: Цвет продукта
+        """
+        super().__init__(name, description, price, quantity)
+        self.performance = performance
+        self.model = model
+        self.amount_built_in_memory = amount_built_in_memory
+        self.color = color
+
+
+class LawnGrass(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, producing_country: str,
+                 germination_period: str, color: str):
+        """
+        Функция инициализирует класс LawnGrass
+        :param name: Имя
+        :param description: Описание
+        :param price: цена
+        :param quantity: количество
+        :param producing_country: страна-производитель
+        :param germination_period: срок прорастания
+        :param color: цвет
+        """
+        super().__init__(name, description, price, quantity)
+        self.producing_country = producing_country
+        self.germination_period = germination_period
+        self.color = color
