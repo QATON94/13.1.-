@@ -38,7 +38,7 @@ class Category(FromFile, MixinLog):
         self.__product = products
         Category.number_categories += 1
         self.total_number_of_unique_products = len(self.__product)
-        # MixinLog.__repr__(self)
+        MixinLog.__repr__(self)
 
     @property
     def products(self) -> list:

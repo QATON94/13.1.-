@@ -92,4 +92,3 @@ def test_avg_all_price(path_test_json):
     )
     assert Category.avg_all_price(category1) == 0
     assert Category.avg_all_price(category[0]) == 123000.0
-
