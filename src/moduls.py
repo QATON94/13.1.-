@@ -25,8 +25,6 @@ class MixinLog:
 
 class Category(FromFile, MixinLog):
     number_categories = 0
-    sum_avg_price = 0
-    value = 0
 
     def __init__(self, name: str, description: str, products: list):
         """
@@ -40,22 +38,7 @@ class Category(FromFile, MixinLog):
         self.__product = products
         Category.number_categories += 1
         self.total_number_of_unique_products = len(self.__product)
-        MixinLog.__repr__(self)
-
-    def avg_all_price(self) -> float:
-        """
-        Получаем среднюю цену всех продуктов в категории
-        :return: Средняя цена всех продуктов в категории
-        """
-        products = self.products
-        try:
-            for product in products:
-                Category.sum_avg_price += product['price']
-                Category.value += 1
-            return Category.sum_avg_price / Category.value
-        except ZeroDivisionError:
-            print(f"Нет товаров")
-            return 0.0
+        # MixinLog.__repr__(self)
 
     @property
     def products(self) -> list:
@@ -105,6 +88,19 @@ class Category(FromFile, MixinLog):
         for name in product:
             list_products.append(name['name'])
         return list_products
+
+    def avg_all_price(self) -> float:
+        """
+        Получаем среднюю цену всех продуктов в категории
+        :return: Средняя цена всех продуктов в категории
+        """
+        total_price = 0
+        if self.products != []:
+            for item in self.products:
+                total_price += item['price']
+            return total_price / len(self.products)
+        else:
+            return 0
 
 
 class ProductAbss(ABC):

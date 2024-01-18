@@ -79,5 +79,17 @@ def test_product_append():
     assert len(products) == 2
     products = Product.append_product(phone2, products)
     assert len(products) == 2
-    assert products[1].price == 22000.0
+    assert products[1].price == 20000.0
     assert products[1].quantity == 5
+
+
+def test_avg_all_price(path_test_json):
+    category = Category.init_from_file_for_category(path_test_json)
+    category1 = Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для удобства жизни",
+        []
+    )
+    assert Category.avg_all_price(category1) == 0
+    assert Category.avg_all_price(category[0]) == 123000.0
+

@@ -13,8 +13,8 @@ def main() -> None:
     for category in categories:
         print(Category.avg_all_price(category))
 
-    phone1 = Smartphone('Xiaomi Redmi Note 10 PRO MAX', '256 GB,', 20000.0, 0, 'High',
-                        'S+', '256 GB', 'red')  # Ошибка ValueError
+    # phone1 = Smartphone('Xiaomi Redmi Note 10 PRO MAX', '256 GB,', 20000.0, 0, 'High',
+    #                     'S+', '256 GB', 'red')  # Ошибка ValueError
 
     # products = Product.init_from_file_for_product
     # categories = Category.init_from_file_for_category(PRODUCTS_PATH)
