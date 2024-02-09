@@ -1,4 +1,5 @@
 import json
+from abc import ABC, abstractmethod
 from typing import Any
 
 
@@ -15,7 +16,14 @@ class FromFile:
         return product_json
 
 
-class Category(FromFile):
+class MixinLog:
+
+    def __repr__(self):
+        print(f'Создан объект: {self.__class__.__name__}')
+        print(f'Название: {self.__dict__}')
+
+
+class Category(FromFile, MixinLog):
     number_categories = 0
 
     def __init__(self, name: str, description: str, products: list):
@@ -30,6 +38,7 @@ class Category(FromFile):
         self.__product = products
         Category.number_categories += 1
         self.total_number_of_unique_products = len(self.__product)
+        MixinLog.__repr__(self)
 
     @property
     def products(self) -> list:
@@ -80,8 +89,39 @@ class Category(FromFile):
             list_products.append(name['name'])
         return list_products
 
+    def avg_all_price(self) -> float:
+        """
+        Получаем среднюю цену всех продуктов в категории
+        :return: Средняя цена всех продуктов в категории
+        """
+        total_price = 0
+        if self.products != []:
+            for item in self.products:
+                total_price += item['price']
+            return total_price / len(self.products)
+        else:
+            return 0
 
-class Product(FromFile):
+
+class ProductAbss(ABC):
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def __repr__(self):
+        pass
+
+    @abstractmethod
+    def change_price(self, new_price: float):
+        pass
+
+
+class Product(ProductAbss, MixinLog, FromFile):
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """
@@ -94,7 +134,11 @@ class Product(FromFile):
         self.name = name
         self.description = description
         self.price = price
-        self.quantity = quantity
+        if quantity > 0:
+            self.quantity = quantity
+        else:
+            raise ValueError
+        MixinLog.__repr__(self)
 
     def __str__(self):
         """
@@ -108,14 +152,6 @@ class Product(FromFile):
         """
         return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
 
-    @property
-    def change_price(self):
-        """
-        Геттер аргумента price
-        """
-        return self.price
-
-    @change_price.setter
     def change_price(self, new_price: float):
         """
         Сеттер записывает новую цену, если цена ниже текущей то спрашивает разрешение на перезапись
@@ -163,7 +199,7 @@ class Product(FromFile):
         """
         Метод добавляет новый продукт или обновляет старый
         :param new_product: новый продукт
-        :param: список продуктов
+        :param products: список продуктов
         :return: обновленный список продуктов
         """
         check = False
@@ -189,7 +225,7 @@ class Product(FromFile):
         raise print('Неверное сложение в продуктах')
 
 
-class Smartphone(Product):
+class Smartphone(Product, MixinLog):
 
     def __init__(self, name: str, description: str, price: float, quantity: int, performance, model: str,
                  amount_built_in_memory: str, color: str):
@@ -209,9 +245,10 @@ class Smartphone(Product):
         self.model = model
         self.amount_built_in_memory = amount_built_in_memory
         self.color = color
+        MixinLog.__init__(self)
 
 
-class LawnGrass(Product):
+class LawnGrass(Product, MixinLog):
 
     def __init__(self, name: str, description: str, price: float, quantity: int, producing_country: str,
                  germination_period: str, color: str):
@@ -229,3 +266,4 @@ class LawnGrass(Product):
         self.producing_country = producing_country
         self.germination_period = germination_period
         self.color = color
+        MixinLog.__init__(self)
